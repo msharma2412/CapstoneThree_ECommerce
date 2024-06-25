@@ -79,7 +79,7 @@ public List<Product> getProductsInCategory(@PathVariable Long categoryId) {
     {
         try
         {
-            return categoryDao.create(Category);//need to ask question about error
+            return categoryDao.create(Category);//erro is incompatable types fourn. org. yearup.models.category needed
         }
         catch(Exception ex)
         {
@@ -87,51 +87,61 @@ public List<Product> getProductsInCategory(@PathVariable Long categoryId) {
         }
     }
 
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
-
-      //Issue with pre autorization. Work on other mappings then going back
-
-
-
-
-
-//        // get a list of product by categoryId
-//        return null;
-//    }
-//
-//    // add annotation to call this method for a POST action
-//    // add annotation to ensure that only an ADMIN can call this function
-//    public Category addCategory(@RequestBody Category category)
-//    {
-//        // insert the category
-//        return null;
-//    }
-//
-//    // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
+// add annotation to call this method for a PUT (update) action - the url path must include the categoryId
 //    // add annotation to ensure that only an ADMIN can call this function
 //    public void updateCategory(@PathVariable int id, @RequestBody Category category)
 //    {
 //        // update the category by id
 //    }
-//
+@PutMapping("{id}")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+public void updateCategory(@PathVariable int id, @RequestBody Category category)
+{
+    try
+    {
+        categoryDao.create(category);
+    }
+    catch(Exception ex)
+    {
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+    }
+}
+    //Issue with pre autorization. Work on other mappings then going back
 //
 //    // add annotation to call this method for a DELETE action - the url path must include the categoryId
 //    // add annotation to ensure that only an ADMIN can call this function
 //    public void deleteCategory(@PathVariable int id)
 //    {
 //        // delete the category by id
-//    }
+
+
+
+    @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deleteCategory(@PathVariable int id)
+    {
+        try
+        {
+            var category = categoryDao.getById(id);
+
+            if(category== null)
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+            categoryDao.delete(id);
+        }
+        catch(Exception ex)
+        {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
 
