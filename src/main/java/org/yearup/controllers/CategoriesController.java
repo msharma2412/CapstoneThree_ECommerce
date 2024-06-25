@@ -2,11 +2,11 @@ package org.yearup.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.yearup.data.CategoryDao;
 import org.yearup.data.ProductDao;
-import org.yearup.data.mysql.MySqlCategoryDao;
 import org.yearup.models.Category;
 import org.yearup.models.Product;
 
@@ -68,19 +68,46 @@ public List<Product> getProductsInCategory(@PathVariable Long categoryId) {
         return Arrays.asList(new Product());
     } else {
         return null;
+
     }
 }
+    //add annotation to call this method for a POST action
+//    // add annotation to ensure that only an ADMIN can call this function
+    @PostMapping()
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public Category addCategory(@RequestBody Category Category)
+    {
+        try
+        {
+            return categoryDao.create(Category);//need to ask question about error
+        }
+        catch(Exception ex)
+        {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 }
 
 
 
 
 
+      //Issue with pre autorization. Work on other mappings then going back
 
 
 
 
-//    {
+
 //        // get a list of product by categoryId
 //        return null;
 //    }
