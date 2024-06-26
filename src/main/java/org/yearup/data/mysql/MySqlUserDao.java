@@ -87,7 +87,8 @@ public class MySqlUserDao extends MySqlDaoBase implements UserDao
 
             if(row.next())
             {
-                User user = mapRow(row);
+                User user = mapRow(row); //note 'mapRow()' is a method that was created at the end of this class
+                //it takes in a result set and returns a User. scroll down to reference the method
                 return user;
             }
         }

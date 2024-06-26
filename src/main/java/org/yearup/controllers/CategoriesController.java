@@ -22,7 +22,8 @@ private CategoryDao categoryDao;
 private ProductDao productDao;
 
 
-@Autowired // create an Autowired controller to inject the categoryDao and ProductDao
+
+    @Autowired // create an Autowired controller to inject the categoryDao and ProductDao
 public CategoriesController(CategoryDao categoryDao, ProductDao productDao) {
     this.categoryDao = categoryDao;
     this.productDao = productDao;
@@ -36,6 +37,7 @@ public CategoriesController(CategoryDao categoryDao, ProductDao productDao) {
 @ResponseStatus(value = HttpStatus.OK)
 public List<Category> getCategories() {
     try {
+        System.out.println("I am in the category doa");
         return categoryDao.getAllCategories();
     } catch (Exception ex) {
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
@@ -44,17 +46,21 @@ public List<Category> getCategories() {
 
 
 // add the appropriate annotation for a get action  // get the category by id
-public Category getbycategoryID(@PathVariable int id) {
+@GetMapping("/{categoryId}")
+public Category getByCategoryID(@PathVariable int id) {
 
     try {
         var category = categoryDao.getById(id);
 
-        if (category == null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (category != null) {
+            return category;
+        }
 
-        return category;
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND); // sends 400 error
+
     } catch (Exception ex) {
-        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        System.out.println(ex.getLocalizedMessage());
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad."); //sends 500 error
     }
 }                                                                   // get the category by id
 
@@ -79,7 +85,7 @@ public List<Product> getProductsInCategory(@PathVariable Long categoryId) {
     {
         try
         {
-            return categoryDao.create(Category);//erro is incompatable types fourn. org. yearup.models.category needed
+            return categoryDao.create(Category);//error is incompatable types fourn. org. yearup.models.category needed
         }
         catch(Exception ex)
         {
@@ -95,14 +101,10 @@ public List<Product> getProductsInCategory(@PathVariable Long categoryId) {
 //    }
 @PutMapping("{id}")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
-public void updateCategory(@PathVariable int id, @RequestBody Category category)
-{
-    try
-    {
-        categoryDao.create(category);
-    }
-    catch(Exception ex)
-    {
+public void updateCategory(@PathVariable int id, @RequestBody Category category) {
+    try {
+        categoryDao.update(id, category);
+    } catch (Exception ex) {
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
     }
 }
