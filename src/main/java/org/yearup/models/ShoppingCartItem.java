@@ -1,6 +1,10 @@
 package org.yearup.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.yearup.data.ProductDao;
+import org.yearup.data.ShoppingCartDao;
+import org.yearup.data.UserDao;
 
 import java.math.BigDecimal;
 
@@ -59,3 +63,8 @@ public class ShoppingCartItem
         return subTotal.subtract(discountAmount);
     }
 }
+//    @Autowired
+//    public ShoppingCartController(ShoppingCartDao ShoppingCartDao, UserDao UserDao, ProductDao ProductDao) {
+//        this.shoppingCartDao = shoppingCartDao;
+//        this.userDao = userDao;
+//        this.productDao = productDao;
