@@ -63,8 +63,3 @@ public class ShoppingCartItem
         return subTotal.subtract(discountAmount);
     }
 }
-//    @Autowired
-//    public ShoppingCartController(ShoppingCartDao ShoppingCartDao, UserDao UserDao, ProductDao ProductDao) {
-//        this.shoppingCartDao = shoppingCartDao;
-//        this.userDao = userDao;
-//        this.productDao = productDao;
