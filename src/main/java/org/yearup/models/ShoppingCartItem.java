@@ -1,58 +1,52 @@
 package org.yearup.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.yearup.data.ProductDao;
-import org.yearup.data.ShoppingCartDao;
-import org.yearup.data.UserDao;
 
 import java.math.BigDecimal;
 
-public class ShoppingCartItem
-{
+public class ShoppingCartItem {
     private Product product = null;
     private int quantity = 1;
     private BigDecimal discountPercent = BigDecimal.ZERO;
 
-
-    public Product getProduct()
-    {
-        return product;
+    public ShoppingCartItem() {
     }
 
-    public void setProduct(Product product)
-    {
+    public ShoppingCartItem(Product product, int quantity) {
         this.product = product;
-    }
-
-    public int getQuantity()
-    {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity)
-    {
         this.quantity = quantity;
     }
 
-    public BigDecimal getDiscountPercent()
-    {
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public BigDecimal getDiscountPercent() {
         return discountPercent;
     }
 
-    public void setDiscountPercent(BigDecimal discountPercent)
-    {
+    public void setDiscountPercent(BigDecimal discountPercent) {
         this.discountPercent = discountPercent;
     }
 
     @JsonIgnore
-    public int getProductId()
-    {
+    public int getProductId() {
         return this.product.getProductId();
     }
 
-    public BigDecimal getLineTotal()
-    {
+    public BigDecimal getLineTotal() {
         BigDecimal basePrice = product.getPrice();
 
         BigDecimal quantity = new BigDecimal(this.quantity);
@@ -62,4 +56,6 @@ public class ShoppingCartItem
 
         return subTotal.subtract(discountAmount);
     }
+
 }
+
