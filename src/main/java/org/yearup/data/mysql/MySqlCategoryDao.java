@@ -31,17 +31,17 @@ String sql = "SELECT * FROM categories";
 
 try(Connection connection = getConnection()){
 
-        PreparedStatement statement = connection.prepareStatement(sql);
+    PreparedStatement statement = connection.prepareStatement(sql);
 
-        ResultSet eachCategory = statement.executeQuery();
+    ResultSet eachCategory = statement.executeQuery();
 
-    while (eachCategory.next()) {
+while (eachCategory.next()) {
 
-    Category category = mapRow(eachCategory);
-    categories.add(category);
+Category category = mapRow(eachCategory);
+categories.add(category);
 }
-   // return all categories
-    return categories;
+// return all categories
+return categories;
 
 } catch (SQLException e) {
 System.out.println(e.getLocalizedMessage());
@@ -62,10 +62,10 @@ String sql = "SELECT * FROM categories WHERE categoryID=?";
 try {
 Connection connection = getConnection(); //get connect by calling this method from the parent class (MySQLDaoBase)
 PreparedStatement preparedStatement = connection.prepareStatement(sql); //create prepared statement from sql string
-    //we created above
+//we created above
 
 preparedStatement.setInt(1, categoryId); // set the '?' in the sql string with this value
-    //we want to add an int to the query string from method param
+//we want to add an int to the query string from method param
 
 
 ResultSet categoryById = preparedStatement.executeQuery(); //after we execiute the query we get back a result set
@@ -75,7 +75,7 @@ while(categoryById.next()){
 
 category = mapRow(categoryById);
 
-    return category; // return category by id
+return category; // return category by id
 
 }
 
@@ -92,29 +92,29 @@ public Category create(Category category) {
 String query = "INSERT INTO categories(came, category_id, description) VALUES (?,?,?)";
 
 try (
-        Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+    Connection connection = getConnection();
+    PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 ) {
-    preparedStatement.setString(1, category.getName());
-    preparedStatement.setInt(2, category.getCategoryId());
-    preparedStatement.setString(3, category.getDescription());
+preparedStatement.setString(1, category.getName());
+preparedStatement.setInt(2, category.getCategoryId());
+preparedStatement.setString(3, category.getDescription());
 
-    int rowsAffected = preparedStatement.executeUpdate();
+int rowsAffected = preparedStatement.executeUpdate();
 
-    if (rowsAffected > 0) {
-        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+if (rowsAffected > 0) {
+    ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 
-        if (generatedKeys.next()) {
+    if (generatedKeys.next()) {
 
-           int categoryId = generatedKeys.getInt(1);
-          category.setCategoryId(categoryId);
-            return category;
-        }// create a new category
-        }
+       int categoryId = generatedKeys.getInt(1);
+      category.setCategoryId(categoryId);
+        return category;
+    }// create a new category
+    }
 
 
 } catch (SQLException e){
-    System.out.println(e.getLocalizedMessage());
+System.out.println(e.getLocalizedMessage());
 }
 return null;
 }
@@ -176,9 +176,9 @@ String description = row.getString("description");
 
 Category category = new Category()
 {{
-    setCategoryId(categoryId);
-    setName(name);
-    setDescription(description);
+setCategoryId(categoryId);
+setName(name);
+setDescription(description);
 }};
 
 return category;

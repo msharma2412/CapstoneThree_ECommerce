@@ -114,9 +114,3 @@ throw new RuntimeException(e);
 
 }}
 
-//                int productID=ShoppingCartItems.getInt("product_id");
-//                int quantity=ShoppingCartItems.getInt("quantity");
-//                Product product= productDao.getById( productID);
-//                ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
-//                ShoppingCartItemList.add(shoppingCartItem);
-//String sql = "Select * From Shopping_Cart Where UserID=?";
