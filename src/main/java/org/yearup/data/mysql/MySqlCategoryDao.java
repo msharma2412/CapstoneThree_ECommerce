@@ -17,171 +17,171 @@ import java.util.List;
 @Component
 public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
 {
-    @Autowired
-    public MySqlCategoryDao(DataSource dataSource)
-    {
-        super(dataSource);
+@Autowired
+public MySqlCategoryDao(DataSource dataSource)
+{
+super(dataSource);
 
-    }
+}
 
-    @Override
-    public List<Category> getAllCategories(){
-        List<Category> categories = new ArrayList<>();
-        String sql = "SELECT * FROM categories";
+@Override
+public List<Category> getAllCategories(){
+List<Category> categories = new ArrayList<>();
+String sql = "SELECT * FROM categories";
 
-        try(Connection connection = getConnection()){
+try(Connection connection = getConnection()){
 
-                PreparedStatement statement = connection.prepareStatement(sql);
+        PreparedStatement statement = connection.prepareStatement(sql);
 
-                ResultSet eachCategory = statement.executeQuery();
+        ResultSet eachCategory = statement.executeQuery();
 
-            while (eachCategory.next()) {
+    while (eachCategory.next()) {
 
-            Category category = mapRow(eachCategory);
-            categories.add(category);
-        }
-           // return all categories
-            return categories;
+    Category category = mapRow(eachCategory);
+    categories.add(category);
+}
+   // return all categories
+    return categories;
 
-    } catch (SQLException e) {
-        System.out.println(e.getLocalizedMessage());
-    }
+} catch (SQLException e) {
+System.out.println(e.getLocalizedMessage());
+}
 
-        // return null if there are no categories
-        return null;
-    }
+// return null if there are no categories
+return null;
+}
 
-    @Override
-    public Category getById(int categoryId)
-    {
+@Override
+public Category getById(int categoryId)
+{
 
-        Category category;
+Category category;
 
-        String sql = "SELECT * FROM categories WHERE categoryID=?";
+String sql = "SELECT * FROM categories WHERE categoryID=?";
 
-        try {
-        Connection connection = getConnection(); //get connect by calling this method from the parent class (MySQLDaoBase)
-        PreparedStatement preparedStatement = connection.prepareStatement(sql); //create prepared statement from sql string
-            //we created above
+try {
+Connection connection = getConnection(); //get connect by calling this method from the parent class (MySQLDaoBase)
+PreparedStatement preparedStatement = connection.prepareStatement(sql); //create prepared statement from sql string
+    //we created above
 
-        preparedStatement.setInt(1, categoryId); // set the '?' in the sql string with this value
-            //we want to add an int to the query string from method param
-
-
-        ResultSet categoryById = preparedStatement.executeQuery(); //after we execiute the query we get back a result set
+preparedStatement.setInt(1, categoryId); // set the '?' in the sql string with this value
+    //we want to add an int to the query string from method param
 
 
-        while(categoryById.next()){
-
-        category = mapRow(categoryById);
-
-            return category; // return category by id
-
-        }
-
-        } catch(SQLException e){
-        e.getLocalizedMessage();
-        }
-
-        return null;
-    }
-
-    @Override
-    public Category create(Category category) {
-
-        String query = "INSERT INTO categories(came, category_id, description) VALUES (?,?,?)";
-
-        try (
-                Connection connection = getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-        ) {
-            preparedStatement.setString(1, category.getName());
-            preparedStatement.setInt(2, category.getCategoryId());
-            preparedStatement.setString(3, category.getDescription());
-
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-
-                if (generatedKeys.next()) {
-
-                   int categoryId = generatedKeys.getInt(1);
-                  category.setCategoryId(categoryId);
-                    return category;
-                }// create a new category
-                }
+ResultSet categoryById = preparedStatement.executeQuery(); //after we execiute the query we get back a result set
 
 
-        } catch (SQLException e){
-            System.out.println(e.getLocalizedMessage());
-        }
-        return null;
-    }
+while(categoryById.next()){
 
-    @Override
-    public void update(int categoryId, Category category){
+category = mapRow(categoryById);
 
-        String query = "UPDATE products SET name=?, description=? WHERE category_id=?";
+    return category; // return category by id
 
-        try(
+}
+
+} catch(SQLException e){
+e.getLocalizedMessage();
+}
+
+return null;
+}
+
+@Override
+public Category create(Category category) {
+
+String query = "INSERT INTO categories(came, category_id, description) VALUES (?,?,?)";
+
+try (
         Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ){
-        preparedStatement.setString(1, category.getName());
-        preparedStatement.setString(2, category.getDescription());
+        PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+) {
+    preparedStatement.setString(1, category.getName());
+    preparedStatement.setInt(2, category.getCategoryId());
+    preparedStatement.setString(3, category.getDescription());
 
-        preparedStatement.setInt(2, categoryId);
-        preparedStatement.executeUpdate();
+    int rowsAffected = preparedStatement.executeUpdate();
 
-        } catch (SQLException sql){
-        sql.printStackTrace();
-        }
-    }
+    if (rowsAffected > 0) {
+        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 
+        if (generatedKeys.next()) {
 
-
-    @Override
-    public void delete(int categoryId){
-
-        String query = "DELETE FROM products WHERE category_id=?";
-
-        try(
-        Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ){
-        preparedStatement.setInt(1, categoryId);
-
-        preparedStatement.executeUpdate();
-
-        } catch(SQLException sql){
-        sql.printStackTrace();
-        }
+           int categoryId = generatedKeys.getInt(1);
+          category.setCategoryId(categoryId);
+            return category;
+        }// create a new category
         }
 
 
+} catch (SQLException e){
+    System.out.println(e.getLocalizedMessage());
+}
+return null;
+}
 
-    @Override
-    public List<Category> findAll() {
-        return null;
-    }
+@Override
+public void update(int categoryId, Category category){
+
+String query = "UPDATE products SET name=?, description=? WHERE category_id=?";
+
+try(
+Connection connection = getConnection();
+PreparedStatement preparedStatement = connection.prepareStatement(query);
+){
+preparedStatement.setString(1, category.getName());
+preparedStatement.setString(2, category.getDescription());
+
+preparedStatement.setInt(2, categoryId);
+preparedStatement.executeUpdate();
+
+} catch (SQLException sql){
+sql.printStackTrace();
+}
+}
 
 
 
-    private Category mapRow(ResultSet row) throws SQLException
-    {
-        int categoryId = row.getInt("category_id");
-        String name = row.getString("name");
-        String description = row.getString("description");
+@Override
+public void delete(int categoryId){
 
-        Category category = new Category()
-        {{
-            setCategoryId(categoryId);
-            setName(name);
-            setDescription(description);
-        }};
+String query = "DELETE FROM products WHERE category_id=?";
 
-        return category;
-    }
+try(
+Connection connection = getConnection();
+PreparedStatement preparedStatement = connection.prepareStatement(query);
+){
+preparedStatement.setInt(1, categoryId);
+
+preparedStatement.executeUpdate();
+
+} catch(SQLException sql){
+sql.printStackTrace();
+}
+}
+
+
+
+@Override
+public List<Category> findAll() {
+return null;
+}
+
+
+
+private Category mapRow(ResultSet row) throws SQLException
+{
+int categoryId = row.getInt("category_id");
+String name = row.getString("name");
+String description = row.getString("description");
+
+Category category = new Category()
+{{
+    setCategoryId(categoryId);
+    setName(name);
+    setDescription(description);
+}};
+
+return category;
+}
 
 }

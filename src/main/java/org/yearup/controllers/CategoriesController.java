@@ -37,10 +37,10 @@ this.productDao = productDao;
 @ResponseStatus(value = HttpStatus.OK)
 public List<Category> getCategories() {
 try {
-    System.out.println("I am in the category doa");
-    return categoryDao.getAllCategories();
+System.out.println("I am in the category doa");
+return categoryDao.getAllCategories();
 } catch (Exception ex) {
-    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
 }
 }
 
@@ -50,17 +50,17 @@ try {
 public Category getByCategoryID(@PathVariable int id) {
 
 try {
-    var category = categoryDao.getById(id);
+var category = categoryDao.getById(id);
 
-    if (category != null) {
-        return category;
-    }
+if (category != null) {
+return category;
+}
 
-    throw new ResponseStatusException(HttpStatus.NOT_FOUND); // sends 400 error
+throw new ResponseStatusException(HttpStatus.NOT_FOUND); // sends 400 error
 
 } catch (Exception ex) {
-    System.out.println(ex.getLocalizedMessage());
-    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad."); //sends 500 error
+System.out.println(ex.getLocalizedMessage());
+throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad."); //sends 500 error
 }
 }                                                                   // get the category by id
 
@@ -71,9 +71,9 @@ try {
 @GetMapping("/categories/{categoryId}/products")
 public List<Product> getProductsInCategory(@PathVariable Long categoryId) {
 if (categoryId == 1) {
-    return Arrays.asList(new Product());
+return Arrays.asList(new Product());
 } else {
-    return null;
+return null;
 
 }
 }
@@ -83,14 +83,14 @@ if (categoryId == 1) {
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public Category addCategory(@RequestBody Category Category)
 {
-    try
-    {
-        return categoryDao.create(Category);//error is incompatable types fourn. org. yearup.models.category needed
-    }
-    catch(Exception ex)
-    {
-        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
-    }
+try
+{
+return categoryDao.create(Category);//error is incompatable types fourn. org. yearup.models.category needed
+}
+catch(Exception ex)
+{
+throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+}
 }
 
 // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
@@ -103,9 +103,9 @@ public Category addCategory(@RequestBody Category Category)
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public void updateCategory(@PathVariable int id, @RequestBody Category category) {
 try {
-    categoryDao.update(id, category);
+categoryDao.update(id, category);
 } catch (Exception ex) {
-    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
 }
 }
 //Issue with pre autorization. Work on other mappings then going back
@@ -122,19 +122,19 @@ try {
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public void deleteCategory(@PathVariable int id)
 {
-    try
-    {
-        var category = categoryDao.getById(id);
+try
+{
+var category = categoryDao.getById(id);
 
-        if(category== null)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+if(category== null)
+    throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-        categoryDao.delete(id);
-    }
-    catch(Exception ex)
-    {
-        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
-    }
+categoryDao.delete(id);
+}
+catch(Exception ex)
+{
+throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+}
 }
 }
 
