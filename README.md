@@ -76,8 +76,7 @@ Image of MySqlShoppingCartDao:
  
 Description of code shown in image: Contains the sql query and the prepared that statement that will allow this method to connect to the shopping cart mysql database. It contains a try and catch statement that handles errors.
 
-ShoppingCartController: The shoppingcartcontroller contains endpoints that connect the mysqlshoppingcartdao to the website. These endpoints will allow the user to utilize mysql shopping cart, shopping cart dao and mysqlshoppingcartdao to create, add, update, and remove items from a shopping cart on the online store website. There was an error was creating this class. The cart would not load on the website even though it seems that the endpoints for creating and adding an item to the cart were created correctly. There is most likely an error in the shoppingcart, shoppingcartdao,myshoppingcartdao, or shoppingcart controller. We would need to test each feature using software such as Postman and redo each method to find the source of our error.
-
+ShoppingCartController: The shoppingcartcontroller contains endpoints that connect the mysqlshoppingcartdao to the website. These endpoints will allow the user to utilize mysql shopping cart, shopping cart dao and mysqlshoppingcartdao to create, add, update, and remove items from a shopping cart on the online store website. 
 Image of ShoppingCartController:
 ![Capture shoppingcart controller](https://github.com/msharma2412/CapstoneThree_ECommerce/assets/166542550/695adb65-5281-43f1-8fa2-cdd0b900e98a)
 
