@@ -26,6 +26,17 @@ Image of MySqlCategoriesDao:
 
 Description of code shown in image: This image features a sql query.This query tells java to connect to the my sql database and returns the items requested in that query. It contains a try and catch method that will handle errors that are made during the implentation or building of this method.
 
+
+Image of Search Function:
+![image](https://github.com/msharma2412/CapstoneThree_ECommerce/assets/166542550/8d8d016c-d727-4dcc-9b9c-3d30b9186b5c)
+
+
+
+
+Description of Image: Contains the search funtion that allows users to search by item through category.
+
+
+
 Phase 2: Errors in the search function
 
 General Description of errors: There is an error in the website's search functionality and the creation of multiple products on the website.
