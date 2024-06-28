@@ -1,3 +1,4 @@
+![Readme screeshop 1](https://github.com/msharma2412/CapstoneThree_ECommerce/assets/166542550/62a2c52c-76ef-43c4-86af-2768d03a57f7)
 		Project Title:CapstoneThree_ECommerce
 Purpose of project: Fix errors in the backend for an online store along with adding features to create the categories and adding items to cart.
 Image of current website:
